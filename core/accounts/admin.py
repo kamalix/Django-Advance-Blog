@@ -4,6 +4,7 @@ from .models import User
 
 # Register your models here.
 
+
 class CustomUserAdmin(UserAdmin):
 
     model = User
@@ -13,7 +14,9 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
     fieldsets = (
         ('Authentication', {"fields": ("email", "password")}),
-        ('permissions', {"fields": ("is_staff", "is_active","is_superuser")})
+        ('permissions', {"fields": ("is_staff", "is_active","is_superuser")}),
+        ('group permissions', {"fields": ("groups", "user_permissions")}),
+        ('important_date', {"fields": ("last_login",)}),
     )
     
     add_fieldsets = (
