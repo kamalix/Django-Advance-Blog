@@ -3,7 +3,7 @@ from django.db.models.query import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import TemplateView,RedirectView
-from django.views.generic import ListView,DetailView,CreateView,FormView
+from django.views.generic import ListView,DetailView,CreateView,FormView,UpdateView
 from .models import Post
 from django.shortcuts import get_object_or_404
 from .forms import PostForm
@@ -85,3 +85,9 @@ class PostCreateView(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
+class PostEditView(UpdateView):
+    model = Post
+    form_class = PostForm
+    success_url = '/blog/post/'
+
