@@ -1,10 +1,12 @@
 from typing import Any
 from django.db.models.query import QuerySet
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.base import TemplateView,RedirectView
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView,DetailView,CreateView,FormView
 from .models import Post
 from django.shortcuts import get_object_or_404
+from .forms import PostForm
 
 # Create your views here.
 
@@ -52,7 +54,7 @@ class PostListView(ListView):
     model = Post
     context_object_name = "posts"
     paginate_by = 3
-    ordering = 'id'
+    ordering = '-id'
 
     #queryset = Post.objects.all()
 
@@ -62,3 +64,20 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+
+'''
+class PostCreateView(FormView):
+    template_name = 'contact.html'
+    form_class = PostForm
+    success_url = '/blog/post/'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+'''
+
+class PostCreateView(CreateView):
+    model = Post
+    #fields = ['author','title','content','status','category','published_date']
+    form_class = PostForm
+    success_url = '/blog/post/'
